@@ -1,0 +1,15 @@
+[package]
+name = "si4743"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embedded-hal-async = "1.0"
+bitflags = "2"
+
+[dependencies.defmt]
+defmt = { version = "0.3", optional = true }
+
+[features]
+default = []
+defmt = ["dep:defmt"]
