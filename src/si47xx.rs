@@ -16,10 +16,13 @@ enum Command {
     FmSeekStart = 0x21,
     FmTuneStatus = 0x22,
     FmRsqStatus = 0x23,
+    #[allow(dead_code)]
     FmRdsStatus = 0x24,
     AmTuneFreq = 0x40,
+    #[allow(dead_code)]
     AmSeekStart = 0x41,
     AmTuneStatus = 0x42,
+    #[allow(dead_code)]
     AmRsqStatus = 0x43,
 }
 

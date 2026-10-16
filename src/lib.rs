@@ -5,5 +5,4 @@ mod bitflags;
 
 pub mod rds;
 pub mod si47xx;
-pub mod rds;
-pub mod si47xx;
+
