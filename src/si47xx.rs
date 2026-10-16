@@ -115,6 +115,15 @@ pub enum ReceiverProperties {
     RxHardMute = 0x4001,
 }
 
+// AN332 (REV 1.0); page 101, Property 0x1402. FM_SEEK_FREQ_SPACING
+#[repr(u16)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum FmSeekSpacing {
+    KHz50 = (5 & 0x1F),
+    KHz100 = (10 & 0x1F),
+    KHz200 = (20 & 0x1F),
+}
+
 // AN332 (REV 1.0); page 65, ARG1 of POWER_UP
 bitflags! {
     pub struct PowerUpArg: u8 {
@@ -443,6 +452,21 @@ where
             &[0x02], // CANCEL=1
         )
         .await
+    }
+
+    /// Selects frequency spacing for FM seek.
+    ///
+    /// AN332 (REV 1.0); page 101
+    /// There are only 3 valid values: 5, 10, and 20. The CTS bit (and optional interrupt) is set when it 
+    /// is safe to send the next command. This property may only be set or read when in powerup mode.
+    /// 
+    /// The default is 100 kHz.    
+    pub async fn fm_seek_freq_spacing(
+        &mut self,
+        spacing: FmSeekSpacing,
+    ) -> Result<ReceiverStatus, ReceiverError<E>> {
+        self.set_property(ReceiverProperties::FmSeekFreqSpacing as u16, spacing as u16)
+            .await
     }
 
     /// Tunes the AM/SW/LW receive to a frequency between 149 and 23 MHz in 1 kHz steps.
